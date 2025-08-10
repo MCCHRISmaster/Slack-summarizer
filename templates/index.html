@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Slack Incident Summarizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index1.css') }}">
+</head>
+<body>
+    <h1>🛠️ Incident Summary Generator</h1>
+
+    <form method="post">
+        <label for="channel">Choose Slack Channel:</label>
+        <select name="channel" id="channel">
+            {% for ch in channels %}
+                <option value="{{ ch }}">{{ ch }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Generate Summary</button>
+    </form>
+
+    {% if summary %}
+        <h2>📝 Summary:</h2>
+        <pre>{{ summary }}</pre>
+
+        {% if pdf %}
+            <a href="{{ url_for('download', filename=pdf) }}">📄 Download PDF</a>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
