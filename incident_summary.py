@@ -118,8 +118,9 @@ def main():
     print("\n🔹 Messages Fetched:\n", messages[:500], "...\n")
 
     # save to a pdf
-    if check_for_resolution(messages):
-        summary = summarize(messages)
+    relevant_block = check_for_resolution(messages)
+    if relevant_block and relevant_block != "Incident not resolved yet.":
+        summary = summarize(relevant_block)
         save_summary_as_pdf(summary)
     else:
         print("Incident not resolved yet. Skipping summary.")
