@@ -6,15 +6,39 @@
 </head>
 <body>
     <h1>🛠️ Incident Summary Generator</h1>
-
-    <form method="post">
+    
+    <!-- Last Incident Summary Form -->
+    <form method="POST">
         <label for="channel">Choose Slack Channel:</label>
         <select name="channel" id="channel">
             {% for ch in channels %}
                 <option value="{{ ch }}">{{ ch }}</option>
             {% endfor %}
         </select>
-        <button type="submit">Generate Summary</button>
+        <button type="submit" name="form_type" value="last_incident_filter">Last Incident Summary</button>
+    </form>
+
+    <!-- All Incidents Summary Filtered Form -->
+    <form method="POST">
+        <label for="channel">Choose Slack Channel:</label>
+        <select name="channel" id="channel">
+            {% for ch in channels %}
+                <option value="{{ ch }}">{{ ch }}</option>
+            {% endfor %}
+        </select>
+        <label>Start Date:</label>
+        <input type="date" name="start_date"><br>
+
+        <label>End Date:</label>
+        <input type="date" name="end_date"><br>
+
+        <label>Keywords (comma separated):</label>
+        <input type="text" name="keywords"><br>
+
+        <label>User IDs (comma separated):</label>
+        <input type="text" name="users"><br>
+        
+        <button type="submit" name="form_type" value="date_filter">Filter</button>
     </form>
 
     {% if summary %}

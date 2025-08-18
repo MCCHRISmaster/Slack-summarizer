@@ -82,7 +82,7 @@ def save_summary_as_pdf(summary, filename=None, folder="summaries"):
     print(f"✅ Summary saved to {filename}")
     return filename
 
-def check_for_resolution(messages):
+def last_incident(messages):
     keywords = ["incident resolved", "resolved", "closing incident"]
     message_lines = [msg for msg in messages.split("\n") if msg.strip()]
     if not message_lines:
@@ -106,6 +106,32 @@ def check_for_resolution(messages):
     end = resolved_indices[-1]
     return "\n".join(message_lines[start:end])
 
+def get_filtered_messages(channel_id, start_date=None, end_date=None, keywords=None, users=None):
+    response = client.conversations_history(channel=channel_id)
+    messages = response["messages"]
+    filtered_messages = []
+
+    for msg in messages:
+        if "text" not in msg:
+            continue
+
+        text = msg["text"]
+        ts = float(msg["ts"])
+        message_date = datetime.fromtimestamp(ts)
+
+        if start_date and message_date < start_date:
+            continue
+        if end_date and message_date > end_date:
+            continue
+        if keywords and not any(keyword.lower() in text.lower() for keyword in keywords):
+            continue
+        if users and "user" in msg and msg["user"] not in users:
+            continue
+
+        filtered_messages.append(text)
+
+    return "\n".join(filtered_messages)
+
 def main():
     response = client.conversations_list()
 
@@ -118,7 +144,7 @@ def main():
     print("\n🔹 Messages Fetched:\n", messages[:500], "...\n")
 
     # save to a pdf
-    relevant_block = check_for_resolution(messages)
+    relevant_block = last_incident(messages)
     if relevant_block and relevant_block != "Incident not resolved yet.":
         summary = summarize(relevant_block)
         save_summary_as_pdf(summary)
