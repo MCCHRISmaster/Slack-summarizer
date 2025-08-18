@@ -30,25 +30,81 @@ p {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-/* Download Button */
-a.download-button {
-    display: inline-block;
-    padding: 0.75rem 1.25rem;
-    background-color: #007BFF;
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    transition: background-color 0.2s ease;
-    font-weight: bold;
+/* Form Styling */
+form {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    max-width: 500px;
 }
 
+label {
+    font-weight: 500;
+    margin-top: 1rem;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+input[type="date"],
+input[type="text"],
+select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background: #f6f6f6;
+    transition: border-color 0.2s;
+}
+
+input[type="date"]:focus,
+input[type="text"]:focus,
+select:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+/* Button Styling */
+button,
+a.download-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(90deg, #007BFF 0%, #0056b3 100%);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,123,255,0.08);
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+    transition: background 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+}
+
+button:hover,
 a.download-button:hover {
-    background-color: #0056b3;
+    background: linear-gradient(90deg, #0056b3 0%, #007BFF 100%);
+    box-shadow: 0 4px 12px rgba(0,123,255,0.15);
+}
+
+button:active {
+    background: #004080;
 }
 
 /* Responsive Layout */
 @media (max-width: 600px) {
     body {
         padding: 1rem;
+    }
+    form {
+        padding: 1rem;
+        max-width: 100%;
     }
 }
